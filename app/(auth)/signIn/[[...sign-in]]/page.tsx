@@ -1,5 +1,9 @@
 import { SignIn } from "@clerk/nextjs";
 
-export default function Page() {
+import React from "react";
+
+const Page = () => {
   return <SignIn />;
-}
+};
+
+export default Page;
