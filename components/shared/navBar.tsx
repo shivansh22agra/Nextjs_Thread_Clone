@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { dark } from "@clerk/themes";
 import {
   OrganizationSwitcher,
   SignInButton,
@@ -28,7 +29,12 @@ const NavBar = () => {
             </SignOutButton>
           </SignedIn>
         </div>
-        <OrganizationSwitcher />
+        <OrganizationSwitcher
+          appearance={{
+            baseTheme: dark,
+            elements: { organizationSwitcherTrigger: "py-2 px-2" },
+          }}
+        />
       </div>
     </nav>
   );

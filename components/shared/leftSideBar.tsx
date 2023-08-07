@@ -1,14 +1,11 @@
 "use client";
-import {
-  OrganizationSwitcher,
-  SignInButton,
-  SignOutButton,
-  SignedIn,
-} from "@clerk/nextjs";
-import React from "react";
 import sidebarLinks from "@/constants/index.js";
-import Link from "next/link";
+import {
+  SignOutButton,
+  SignedIn
+} from "@clerk/nextjs";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const leftSideBar = () => {

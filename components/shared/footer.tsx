@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import sidebarLinks from "@/constants/index.js";
 import Link from "next/link";
 import Image from "next/image";
