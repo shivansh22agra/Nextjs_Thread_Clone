@@ -1,15 +1,17 @@
-'use client'
-import { revalidatePath } from "next/cache";
+"use server"
 
+import { revalidatePath } from "next/cache";
+import User from "../models/userModel";
+import { connectToDb } from "../validations/mongoose";
 interface Params {
-    userId: string;
-    username: string;
-    name: string;
-    bio: string;
-    image: string;
-    path: string;
-  }
-  
+  userId: string;
+  username: string;
+  name: string;
+  bio: string;
+  image: string;
+  path: string;
+}
+
 export async function updateUser({
   userId,
   bio,
@@ -19,18 +21,19 @@ export async function updateUser({
   image,
 }: Params): Promise<void> {
   try {
+    connectToDb();
 
-    // await User.findOneAndUpdate(
-    //   { id: userId },
-    //   {
-    //     username: username.toLowerCase(),
-    //     name,
-    //     bio,
-    //     image,
-    //     onboarded: true,
-    //   },
-    //   { upsert: true }
-    // );
+    await User.findOneAndUpdate(
+      { id: userId },
+      {
+        username: username.toLowerCase(),
+        name,
+        bio,
+        image,
+        onboarded: true,
+      },
+      { upsert: true }
+    );
 
     if (path === "/profile/edit") {
       revalidatePath(path);
@@ -39,4 +42,3 @@ export async function updateUser({
     throw new Error(`Failed to create/update user: ${error.message}`);
   }
 }
-
