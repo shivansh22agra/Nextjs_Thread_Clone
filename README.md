@@ -1,5 +1,7 @@
-
+Making a threads clone using Next.js.
 Implemented Authentications methods like google sign in using Clerk.
+
+
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
