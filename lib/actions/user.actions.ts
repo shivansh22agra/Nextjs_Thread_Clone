@@ -21,23 +21,27 @@ export async function updateUser({
   image,
 }: Params): Promise<void> {
   try {
-    connectToDb();
+    connectToDb().then(async () => {
+      console.log('____aya');
+      await User.findOneAndUpdate(
+        { id: userId },
+        {
+          username: username.toLowerCase(),
+          name,
+          bio,
+          image,
+          onboarded: true,
+        },
+        { upsert: true }
+      );
 
-    await User.findOneAndUpdate(
-      { id: userId },
-      {
-        username: username.toLowerCase(),
-        name,
-        bio,
-        image,
-        onboarded: true,
-      },
-      { upsert: true }
-    );
+      if (path === "/profile/edit") {
+        revalidatePath(path);
+      }
 
-    if (path === "/profile/edit") {
-      revalidatePath(path);
-    }
+    });
+
+
   } catch (error: any) {
     throw new Error(`Failed to create/update user: ${error.message}`);
   }
