@@ -34,7 +34,7 @@ export async function updateUser({
         },
         { upsert: true }
       );
-
+      //TODO
       if (path === "/profile/edit") {
         revalidatePath(path);
       }
@@ -45,4 +45,14 @@ export async function updateUser({
   } catch (error: any) {
     throw new Error(`Failed to create/update user: ${error.message}`);
   }
+}
+export async function fetchUser(userid: String) {
+  try {
+    connectToDb();
+   return await User.findOne({ id: userid });
+  } catch (e){
+    console.log(`___userfetch error ${e}`);
+
+  }
+
 }
