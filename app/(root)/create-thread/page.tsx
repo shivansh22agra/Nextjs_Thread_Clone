@@ -14,7 +14,7 @@ async function CreateThread() {
   return (
     <div className="text-light-1">
       CreateThread
-      <PostThread userid={userinfo?.id} />
+      <PostThread userid={userinfo?._id} />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
-import { useOrganization } from "@clerk/nextjs";
+import { auth, useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { createThread } from "@/lib/actions/threads.action";
+import { text } from "stream/consumers";
 
 const ThreadValidation = z.object({
   thread: z.string().nonempty().min(3, { message: "Minimum 3 characters." }),
@@ -41,6 +43,15 @@ function PostThread({ userid }: { userid: string }) {
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+    console.log(`textthreads coming`);
+
+    console.log(`textthreads ${values.thread} ${userid}`);
+    await createThread({
+      text: values.thread,
+      author: userid,
+      communityId: null,
+      path: pathname,
+    });
     // await createThread({
     //   text: values.thread,
     //   author: userId,
@@ -53,7 +64,7 @@ function PostThread({ userid }: { userid: string }) {
 
   return (
     <Form {...form}>
-         {/* <form action="/api/form" method="post">
+      {/* <form action="/api/form" method="post">
           <label htmlFor="first">First name:</label>
           <input type="text" id="first" name="first" />
           <label htmlFor="last">Last name:</label>
@@ -64,7 +75,6 @@ function PostThread({ userid }: { userid: string }) {
         className="mt-10 flex flex-col justify-start gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-       
         <FormField
           control={form.control}
           name="thread"
