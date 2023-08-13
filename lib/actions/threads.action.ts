@@ -33,9 +33,26 @@ export async function createThread({ text, author, communityId, path }: Params) 
 export async function fetchThread(pageNumber = 1, pageSize = 20) {
     try {
         connectToDb();
-        const threads = await Thread.find({
+        const skipsAmount = (pageNumber - 1) * pageSize;
+        const threads = Thread.find({
             parentId: { $in: [null, undefined] }
-        }).sort({ created: 'desc' });
+        }).sort({ created: 'desc' }).skip(skipsAmount).limit(pageSize).populate({
+            path: 'author',
+            model: User
+        }).populate({
+            path: 'children', populate: {
+                path: 'author',
+                model: User
+                , select: "_id name parentId image"
+            }
+        })
+        const totalPostCount = await Thread.countDocuments({
+            parentId: { $in: [null, undefined] }
+
+        })
+        const posts = await threads.exec();
+        const isNext = totalPostCount > skipsAmount + posts.length;
+        return { posts, isNext };
     } catch (e) {
         console.log(`error aya $e`);
     }
