@@ -30,3 +30,13 @@ export async function createThread({ text, author, communityId, path }: Params) 
     }
 
 }
+export async function fetchThread(pageNumber = 1, pageSize = 20) {
+    try {
+        connectToDb();
+        const threads = await Thread.find({
+            parentId: { $in: [null, undefined] }
+        }).sort({ created: 'desc' });
+    } catch (e) {
+        console.log(`error aya $e`);
+    }
+}
