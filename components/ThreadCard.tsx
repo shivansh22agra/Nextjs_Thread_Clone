@@ -72,13 +72,15 @@ function ThreadCard({
                   height={22}
                   className="cursor-pointer"
                 />
-                <Image
-                  src="/assets/reply.svg"
-                  alt="reply"
-                  width={22}
-                  height={22}
-                  className="cursor-pointer"
-                />{" "}
+                <Link href={`/thread/${id}`}>
+                  <Image
+                    src="/assets/reply.svg"
+                    alt="reply"
+                    width={22}
+                    height={22}
+                    className="cursor-pointer"
+                  />
+                </Link>
                 <Image
                   src="/assets/repost.svg"
                   alt="repost"
@@ -94,6 +96,16 @@ function ThreadCard({
                   className="cursor-pointer"
                 />{" "}
               </div>
+              {isComment && comments.length > 0 && (
+                <div>
+                  <p className="mt-1 text-subtle-medium">{comments.length} replies</p>
+                  <Link href={`/thread/${id}`}>
+                    {comments.map((comment) => {
+                      return <div> {comment.author.image}</div>;
+                    })}
+                  </Link>
+                </div>
+              )}
             </div>{" "}
           </div>
         </div>
