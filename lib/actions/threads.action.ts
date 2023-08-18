@@ -63,6 +63,7 @@ export async function fetchThread(pageNumber = 1, pageSize = 20) {
 
         const thread = await Thread.findById(threadId)
             .populate({
+                //path is the field 
                 path: "author",
                 model: User,
                 select: "_id id name image",
