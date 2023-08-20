@@ -1,10 +1,7 @@
-"use server";
-
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
 
 import ThreadCard from "@/components/ThreadCard";
-import { revalidatePath } from "next/cache";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 import { fetchThreadById } from "@/lib/actions/threads.action";

@@ -58,7 +58,7 @@ function ThreadCard({
           <div className="flex w-full flex-col">
             <Link
               href={`/profile/${author.id}`}
-              className=" w-fit cursor-pointer"
+              className=" w-fit cursor-pointer text-light-2"
             >
               {author.name}
             </Link>
@@ -98,7 +98,9 @@ function ThreadCard({
               </div>
               {isComment && comments.length > 0 && (
                 <div>
-                  <p className="mt-1 text-subtle-medium">{comments.length} replies</p>
+                  <p className="mt-1 text-subtle-medium">
+                    {comments.length} replies
+                  </p>
                   <Link href={`/thread/${id}`}>
                     {comments.map((comment) => {
                       return <div> {comment.author.image}</div>;

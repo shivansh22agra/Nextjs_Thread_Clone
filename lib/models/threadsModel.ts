@@ -18,10 +18,10 @@ const threadSchema = new mongoose.Schema({
     default: Date.now,
   },
   parentId: { type: String },
-  children: {
+  children: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Thread",
-  },
+  }],
 });
 
 // export default mongoose.model("Thread", userSchema);
