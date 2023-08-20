@@ -66,27 +66,22 @@ export async function fetchThread(pageNumber = 1, pageSize = 20) {
                 path: "author",
                 model: User,
                 select: "_id id name image",
-            }) // Populate the author field with _id and username
-            // .populate({
-            //     // path: "community",
-            //     // // model: Communit,
-            //     // select: "_id id name image",
-            // }) // Populate the community field with _id and name
+            })
             .populate({
-                path: "children", // Populate the children field
+                path: "children",
                 populate: [
                     {
-                        path: "author", // Populate the author field within children
+                        path: "author",
                         model: User,
-                        select: "_id id name parentId image", // Select only _id and username fields of the author
+                        select: "_id id name parentId image",
                     },
                     {
-                        path: "children", // Populate the children field within children
-                        model: Thread, // The model of the nested children (assuming it's the same "Thread" model)
+                        path: "children",
+                        model: Thread,
                         populate: {
-                            path: "author", // Populate the author field within nested children
+                            path: "author",
                             model: User,
-                            select: "_id id name parentId image", // Select only _id and username fields of the author
+                            select: "_id id name parentId image",
                         },
                     },
                 ],
@@ -97,5 +92,39 @@ export async function fetchThread(pageNumber = 1, pageSize = 20) {
     } catch (err) {
         console.error("Error while fetching thread:", err);
         throw new Error("Unable to fetch thread");
+    }
+}
+export async function addCommentToThread(
+    threadId: string,
+    commentText: string,
+    userId: string,
+    path: string
+) {
+
+    try {
+        connectToDb();
+        const originalThread = await Thread.findById(threadId);
+
+        if (!originalThread) {
+            throw new Error("Thread not found");
+        }
+
+        const commentThread = new Thread({
+            text: commentText,
+            author: userId,
+            parentId: threadId,
+        });
+
+        const savedCommentThread = await commentThread.save();
+        console.log(`original Thread ${originalThread.children}`);
+        await Thread.findById(threadId, {
+            $push: { children: savedCommentThread._id }
+        })
+
+        await originalThread.save();
+
+        revalidatePath(path);
+    } catch (err) {
+        console.error("Error while adding comment:", err);
     }
 }
