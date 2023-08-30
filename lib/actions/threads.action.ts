@@ -114,6 +114,7 @@ export async function addCommentToThread(
             author: userId,
             parentId: threadId,
         });
+        
 
         const savedCommentThread = await commentThread.save();
         console.log(`original Thread ${originalThread.children}`);
