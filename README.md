@@ -6,8 +6,10 @@ Use Express and Mongoose for apis
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-[link](https://nextjs-thread-clone-git-main-shivansh22agra.vercel.app/)
+
+[Checkout out The Project](https://nextjs-thread-clone-git-main-shivansh22agra.vercel.app/)
 <img width="1071" alt="image" src="https://github.com/shivansh22agra/Nextjs_Thread_Clone/assets/94140467/0efb5b9c-7c6b-4975-a6dc-8bd4c45d1058">
+<img width="1080" alt="image" src="https://github.com/shivansh22agra/Nextjs_Thread_Clone/assets/94140467/ff67d0be-e6ac-4ca9-9523-1aab39524251">
 
 ## Getting Started
 
